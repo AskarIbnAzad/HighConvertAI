@@ -1,0 +1,222 @@
+/* ===================================================== */
+/* GLOBAL PRIMENG TABLE THEME — applies to every p-table  */
+/* in the app. No ::ng-deep needed since this is global.  */
+/* ===================================================== */
+
+.p-datatable {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.p-datatable .p-datatable-header {
+  background: #ffffff;
+  border: none;
+  padding: 18px 20px;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: #f7f9f1;
+  color: #071124;
+  font-weight: 700;
+  font-size: 13px;
+  border: none;
+  border-bottom: 1px solid #ececec;
+  padding: 14px 16px;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  transition: background 0.15s ease;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background: #f7f9f1 !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #ececec;
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.p-datatable .p-datatable-emptymessage td {
+  text-align: center;
+  color: #9ca3af;
+  padding: 40px 0;
+}
+
+.p-paginator {
+  background: #ffffff;
+  border: none;
+  padding: 14px 20px;
+}
+
+.p-paginator .p-paginator-page.p-highlight {
+  background: #00584d;
+  color: #ffffff;
+  border-radius: 999px;
+}
+
+/* Filter row (shared class across all grids) */
+.p-datatable .filter-row > th {
+  background: #ffffff;
+  padding: 8px 12px;
+  border-bottom: 1px solid #ececec;
+}
+
+.filter-input {
+  width: 100%;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: #00584d;
+}
+
+.filter-select {
+  width: 100%;
+  display: block;
+}
+
+.filter-select .p-select {
+  width: 100%;
+  height: 34px;
+  min-height: 34px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-select .p-select:not(.p-disabled).p-focus {
+  border-color: #00584d;
+  box-shadow: none;
+}
+
+.filter-select .p-select-label {
+  flex: 1 1 auto;
+  font-size: 13px;
+  padding: 0 8px 0 10px;
+  color: #374151;
+  line-height: 32px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filter-select .p-select-label.p-placeholder {
+  color: #9ca3af;
+}
+
+.filter-select .p-select-clear-icon {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  color: #9ca3af;
+}
+
+.filter-select .p-select-dropdown {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.p-select-overlay {
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.25) 0px 4px 16px 0px;
+  border: 1px solid #ececec;
+  margin-top: 4px;
+}
+
+.p-select-overlay .p-select-option {
+  font-size: 13px;
+  padding: 8px 12px;
+  color: #374151;
+}
+
+.p-select-overlay .p-select-option.p-select-option-selected {
+  background: #eef5de;
+  color: #00584d;
+  font-weight: 600;
+}
+
+.p-select-overlay .p-select-option:not(.p-select-option-selected):hover {
+  background: #f7f9f1;
+}
+
+/* Toolbar (shared across grids) */
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.table-toolbar .p-button.p-button-outlined {
+  border-radius: 999px;
+  border-color: #071124;
+  color: #071124;
+  font-weight: 600;
+}
+
+.table-toolbar .p-button.p-button-outlined:hover {
+  background: #071124;
+  color: #ffffff;
+}
+
+.p-input-icon-left {
+  position: relative;
+}
+
+.p-input-icon-left i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.p-input-icon-left input {
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  padding: 0 16px 0 34px;
+  font-size: 13px;
+  min-width: 220px;
+}
+
+.p-input-icon-left input:focus {
+  outline: none;
+  border-color: #00584d;
+}
+
+/* Tags (shared across grids) */
+.p-tag {
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 5px 12px !important;
+}
+
+.p-tag.p-tag-info { background: #dbeafe !important; color: #2563eb !important; }
+.p-tag.p-tag-success { background: #dcfce7 !important; color: #15803d !important; }
+.p-tag.p-tag-danger { background: #fee2e2 !important; color: #dc2626 !important; }
+
+.p-button.p-button-rounded.p-button-text { color: #00584d; }
+.p-button.p-button-rounded.p-button-text:hover { background: #eef5de; }

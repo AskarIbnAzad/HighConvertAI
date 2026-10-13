@@ -1,0 +1,274 @@
+<!-- ===================================================== -->
+<!-- HEADER -->
+<!-- ===================================================== -->
+
+<section class="report-header" *ngIf="result">
+  <div class="container">
+    <div class="report-header-inner">
+      <div class="header-left">
+        <div>
+          <div class="report-url">{{ result.url }}</div>
+
+          <div class="report-meta">
+            <span>Site Type: E-Commerce</span>
+            <span>Page Type: {{ result.pageType }}</span>
+            <span>Audit Date: {{ result.createdAtUtc | date: 'mediumDate' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="score-box">
+        <div class="score-number">{{ result.score }}</div>
+
+        <div>
+          <div class="score-label">Overall Score</div>
+          <div class="score-bar">
+            <div class="score-fill" [style.width.%]="result.score"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- ANALYSIS -->
+<!-- ===================================================== -->
+
+<section class="analysis-section" *ngIf="result">
+  <div class="container">
+    <div class="analysis-top">
+      <h2>Analysis Summary</h2>
+      <p>Overall performance and metrics from your website audit</p>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="analysis-left">
+        <div class="severity-stats-grid">
+          <div class="severity-card total-card">
+            <div class="severity-title">TOTAL ISSUES</div>
+            <div class="severity-number">{{ result.issueCount }}</div>
+          </div>
+
+          <div class="severity-card high-card">
+            <div class="severity-title">HIGH</div>
+            <div class="severity-number">{{ result.highCount }}</div>
+          </div>
+
+          <div class="severity-card medium-card">
+            <div class="severity-title">MEDIUM</div>
+            <div class="severity-number">{{ result.mediumCount }}</div>
+          </div>
+
+          <div class="severity-card low-card">
+            <div class="severity-title">LOW</div>
+            <div class="severity-number">{{ result.lowCount }}</div>
+          </div>
+        </div>
+
+        <div class="category-grid">
+          <div
+            class="metric-card modern-card"
+            *ngFor="let group of groups; let i = index"
+            (click)="selectGroup(i)"
+          >
+            <div class="metric-header">
+              <span class="metric-title">{{ getGroupLabel(group.name) }}</span>
+
+              <span class="metric-status" [ngClass]="getSeverityClass(group.issueSeverity?.name)">
+                {{ group.issueSeverity?.name }}
+              </span>
+            </div>
+
+            <div class="metric-body">
+              <div class="metric-score">{{ group.issueCount }}</div>
+
+              <div class="severity-list">
+                <div class="severity-item high">High ({{ group.highCount }})</div>
+
+                <div class="severity-item medium">Medium ({{ group.mediumCount }})</div>
+
+                <div class="severity-item low">Low ({{ group.lowCount }})</div>
+              </div>
+            </div>
+
+            <div class="metric-footer">
+              +{{ group.affectedRevenueOpportunity }}% Revenue Opportunity
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="analysis-right">
+        <div class="screenshot-card">
+          <div class="screenshot-head">
+            <div>
+              <h4>Page Screenshots</h4>
+              <p>Desktop & Mobile views tested</p>
+            </div>
+
+            <div class="device-switch">
+              <button [class.active]="desktopSelected" (click)="selectDesktop()">Desktop</button>
+
+              <button [class.active]="!desktopSelected" (click)="selectMobile()">Mobile</button>
+            </div>
+          </div>
+
+          <div class="screenshot-body" [class.mobile-view]="!desktopSelected">
+            <div class="screenshot-loader" *ngIf="desktopSelected && desktopScreenshotLoading">
+              <div class="spinner"></div>
+              <p>Capturing desktop screenshot...</p>
+            </div>
+
+            <div class="screenshot-loader" *ngIf="!desktopSelected && mobileScreenshotLoading">
+              <div class="spinner"></div>
+              <p>Capturing mobile screenshot...</p>
+            </div>
+
+            <img
+              *ngIf="desktopSelected && desktopScreenshotUrl"
+              [src]="desktopScreenshotUrl"
+              alt="Desktop website screenshot"
+              [class.img-hidden]="desktopScreenshotLoading"
+            />
+
+            <img
+              *ngIf="!desktopSelected && mobileScreenshotUrl"
+              [src]="mobileScreenshotUrl"
+              alt="Mobile website screenshot"
+              [class.img-hidden]="mobileScreenshotLoading"
+            />
+          </div>
+        </div>
+
+        <div class="revenue-card">
+          <div class="revenue-head">
+            <div>
+              <h4>Revenue Opportunity</h4>
+              <p>Indicative improvement potential</p>
+            </div>
+          </div>
+
+          <div class="revenue-body">
+            <div class="revenue-number">+{{ estimatedRevenueIncrease }}%</div>
+            <div class="revenue-sub">
+              Indicative score based on issue severity. Not a guaranteed conversion or revenue
+              increase.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- ISSUES -->
+<!-- ===================================================== -->
+
+<section class="issue-wrapper" *ngIf="result">
+  <div class="container">
+    <div
+      class="issue-section"
+      *ngFor="let group of groups; let i = index"
+      [attr.id]="'group-section-' + i"
+    >
+      <div class="issue-header">
+        <div>
+          <h2 class="issue-title">{{ getGroupLabel(group.name) }}</h2>
+
+          <p class="issue-subtitle">
+            {{ group.issueCount }}
+            {{ group.issueCount === 1 ? 'Issue' : 'Issues' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="issue-content">
+        <div class="issue-card" *ngFor="let item of group.issues">
+          <div class="issue-card-top">
+            <div class="issue-card-left">
+              <div class="error-icon">!</div>
+
+              <div>
+                <div class="issue-main-title">{{ item.title }}</div>
+
+                <div class="badge-row">
+                  <div class="impact-badge" [ngClass]="getSeverityClass(item.issueSeverity?.name)">
+                    {{ item.issueSeverity?.name }}
+                  </div>
+
+                  <div class="page-badge">
+                    {{ getGroupLabel(group.name) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="point-box success" *ngIf="item.whatWasRight">
+            <div class="point-heading">✓ What's Working</div>
+
+            <ul>
+              <li>{{ item.whatWasRight }}</li>
+            </ul>
+          </div>
+
+          <div class="point-box improve" *ngIf="item.whatToImprove">
+            <div class="point-heading">! What To Improve</div>
+
+            <ul>
+              <li>{{ item.whatToImprove }}</li>
+            </ul>
+          </div>
+
+          <div
+            class="point-box recommendation"
+            *ngIf="item.recommendation; else lockedRecommendation"
+          >
+            <div class="point-heading">→ Recommendation</div>
+
+            <ul>
+              <li>{{ item.recommendation }}</li>
+            </ul>
+          </div>
+
+          <ng-template #lockedRecommendation>
+            <div class="point-box recommendation locked-recommendation">
+              <div class="lock-icon-wrap">
+                <span class="lock-icon">🔒</span>
+              </div>
+
+              <div class="locked-title">Locked Recommendation</div>
+
+              <div class="locked-description">
+                Sign up for a free account to unlock AI-powered CRO recommendations for this issue.
+              </div>
+
+              <button class="unlock-btn" (click)="goToRegister()">Unlock Free</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- SIGNUP CTA -->
+<!-- ===================================================== -->
+
+<section class="signup-cta" *ngIf="!isLoggedIn">
+  <div class="container">
+    <div class="signup-cta-card">
+      <h2 class="signup-cta-heading">Signup for More Audits Like This</h2>
+
+      <p class="signup-cta-sub">
+        Create a free account to save this audit, run more scans, and track your revenue
+        opportunities over time.
+      </p>
+
+      <button class="signup-cta-btn" (click)="goToRegister()">Create Free Account</button>
+    </div>
+  </div>
+</section>

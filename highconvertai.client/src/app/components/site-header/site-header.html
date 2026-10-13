@@ -1,0 +1,50 @@
+<header>
+  <div class="container navbar">
+    <div class="logo" routerLink="/">
+      <div class="logo-icon">🕶</div>
+      <div>HighConvertAI</div>
+    </div>
+
+    <!-- ADMIN NAVIGATION -->
+    <nav class="main-nav" *ngIf="isLoggedIn && getUserType === 'Admin'">
+      <a routerLink="/admin-dashboard" routerLinkActive="active-link">Dashboard</a>
+      <a routerLink="/user" routerLinkActive="active-link">Users</a>
+      <a routerLink="/audit" routerLinkActive="active-link">All Audits</a>
+      <a routerLink="/user-audit" routerLinkActive="active-link">My Scans</a>
+    </nav>
+
+    <!-- USER NAVIGATION -->
+    <nav class="main-nav" *ngIf="isLoggedIn && getUserType === 'User'">
+      <a routerLink="/user-dashboard" routerLinkActive="active-link">Dashboard</a>
+      <a routerLink="/user-audit" routerLinkActive="active-link">My Scans</a>
+    </nav>
+
+    <div class="header-right">
+      <ng-container *ngIf="!isLoggedIn">
+        <button class="btn-login" routerLink="/login">Login</button>
+        <button class="btn-register" routerLink="/register">Sign Up</button>
+      </ng-container>
+
+      <div class="profile-menu" *ngIf="isLoggedIn">
+        <div class="profile-circle">
+          {{ user?.fullName?.charAt(0) }}
+        </div>
+
+        <div class="dropdown">
+          <div class="user-name">
+            {{ user?.fullName }}
+          </div>
+
+          <div class="user-email">
+            {{ user?.email }}
+          </div>
+
+          <hr />
+
+          <button (click)="goDashboard()">Dashboard</button>
+          <button (click)="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

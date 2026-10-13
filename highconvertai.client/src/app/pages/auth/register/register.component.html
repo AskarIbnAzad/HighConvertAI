@@ -1,0 +1,149 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <!-- Header -->
+    <div class="auth-header">
+      <h1>Create your account</h1>
+      <p>Start optimizing your conversion rate today.</p>
+    </div>
+
+    <!-- Error -->
+    <div class="alert alert-error" *ngIf="error"><span>⚠</span> {{ error }}</div>
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Full Name -->
+      <div class="field">
+        <label>Full Name</label>
+
+        <input
+          type="text"
+          formControlName="fullName"
+          placeholder="Jane Smith"
+          [class.invalid]="f['fullName'].touched && f['fullName'].invalid"
+        />
+
+        <div class="tooltip-box" *ngIf="f['fullName'].touched && f['fullName'].invalid">
+          <div *ngIf="f['fullName'].errors?.['required']">Full name is required</div>
+
+          <div *ngIf="f['fullName'].errors?.['maxlength']">Must be under 100 characters</div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="field">
+        <label>Email Address</label>
+
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="jane@company.com"
+          [class.invalid]="f['email'].touched && f['email'].invalid"
+        />
+
+        <div
+          class="tooltip-box"
+          *ngIf="(f['email'].touched && f['email'].invalid) || f['email'].errors?.['serverError']"
+        >
+          <div *ngIf="f['email'].errors?.['serverError']">
+            {{ f['email'].errors?.['serverError'] }}
+          </div>
+
+          <div *ngIf="f['email'].errors?.['required']">Email is required</div>
+
+          <div *ngIf="f['email'].errors?.['email']">Enter a valid email address</div>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <!-- PASSWORD -->
+      <div class="field">
+        <label>Password</label>
+
+        <div class="input-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Enter password"
+            [class.invalid]="f['password'].touched && f['password'].invalid"
+          />
+
+          <button type="button" class="toggle-eye" (click)="showPassword = !showPassword">
+            <i class="fa-solid" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
+
+        <!-- PROFESSIONAL TOOLTIP (SINGLE MESSAGE MODE) -->
+        <div class="tooltip-box" *ngIf="f['password'].touched && f['password'].invalid">
+          <!-- 1. Server error (highest priority) -->
+          <div *ngIf="f['password'].errors?.['serverError']">
+            {{ f['password'].errors?.['serverError'] }}
+          </div>
+
+          <!-- 2. Required -->
+          <div *ngIf="!f['password'].errors?.['serverError'] && f['password'].errors?.['required']">
+            Password is required
+          </div>
+
+          <!-- 3. Min length -->
+          <div
+            *ngIf="!f['password'].errors?.['serverError'] && f['password'].errors?.['minlength']"
+          >
+            Must be at least 8 characters
+          </div>
+
+          <!-- 4. Strength rules (only if no other errors) -->
+          <div
+            *ngIf="
+              !f['password'].errors?.['serverError'] &&
+              !f['password'].errors?.['required'] &&
+              !f['password'].errors?.['minlength']
+            "
+          >
+            <div *ngIf="f['password'].errors?.['noUppercase']">Add at least 1 uppercase letter</div>
+
+            <div *ngIf="f['password'].errors?.['noNumber']">Add at least 1 number</div>
+
+            <div *ngIf="f['password'].errors?.['noSpecial']">Add at least 1 special character</div>
+          </div>
+        </div>
+      </div>
+      <!-- Confirm Password -->
+      <div class="field">
+        <label>Confirm Password</label>
+
+        <div class="input-wrapper">
+          <input
+            [type]="showConfirm ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            placeholder="Repeat password"
+            [class.invalid]="f['confirmPassword'].touched && form.errors?.['passwordMismatch']"
+          />
+
+          <button type="button" class="toggle-eye" (click)="showConfirm = !showConfirm">
+            <i class="fa-solid" [ngClass]="showConfirm ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
+
+        <div
+          class="tooltip-box"
+          *ngIf="f['confirmPassword'].touched && form.errors?.['passwordMismatch']"
+        >
+          Passwords do not match
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <!-- Submit -->
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        <span *ngIf="loading" class="spinner"></span>
+        <span>{{ loading ? 'Creating Account...' : 'Create Account' }}</span>
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <p class="auth-footer">
+      Already have an account?
+      <a routerLink="/login">Sign in</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+<ng-container *ngIf="!loading">
+  <!-- ===================================================== -->
+  <!-- VALIDATION PAGE -->
+  <!-- ===================================================== -->
+
+  <app-validation-card
+    *ngIf="showValidationCard"
+    [title]="validationTitle"
+    [message]="validationMessage"
+    [footer]="validationFooter"
+    [buttonText]="validationButton"
+    (action)="validationAction()"
+  >
+  </app-validation-card>
+
+  <!-- ===================================================== -->
+  <!-- HOME PAGE -->
+  <!-- ===================================================== -->
+
+  <ng-container *ngIf="!showValidationCard">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <!-- <div class="rating">
+          <div class="stars">★★★★★</div>
+          <div>Rated 4.9 by over 180+ Shopify brands</div>
+        </div> -->
+
+        <h1 class="hero-title">
+          <span>Instantly</span> Audit Your Shopify Store
+          <br />
+          & Find Conversion Issues - FREE
+        </h1>
+
+        <div class="audit-card">
+          <div class="audit-title">Start your Instant CRO Audit:</div>
+
+          <div class="input-wrap" [class.has-error]="urlError">
+            <input
+              type="text"
+              placeholder="https://www.example.com"
+              [(ngModel)]="url"
+              (input)="clearUrlError()"
+              (keyup.enter)="analyze()"
+              [attr.aria-invalid]="urlError ? 'true' : 'false'"
+              aria-label="Website URL"
+            />
+
+            <button type="button" class="btn-analyze" (click)="analyze()">Analyze</button>
+          </div>
+
+          <div class="url-validation" *ngIf="urlError">
+            <span class="validation-icon">!</span>
+            <span>{{ urlError }}</span>
+          </div>
+
+          <div class="audit-sub">100% FREE - No Credit Card Or Subscription Required</div>
+        </div>
+
+        <!-- <div class="quote">
+          “We experienced a 30% jump in sales, with zero additional ad spend after implementing the
+          recommendations.”
+        </div> -->
+
+        <div class="platforms">
+          <p>SUPPORTED PLATFORMS</p>
+
+          <div class="platform-grid">
+            <div class="platform-item">Shopify</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+      <div class="container">
+        <h2 class="testimonials-title">
+          Real Results From Shopify
+          <br />
+          Stores <span>Just Like Yours</span>
+        </h2>
+
+        <div class="cards">
+          <div class="card">
+            <div class="card-stars">★★★★★</div>
+            <p>
+              “I ordered a report feeling unsure about the value it would really bring.
+              <strong>Less ad spend and more customers</strong>, highly recommended!”
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-stars">★★★★★</div>
+            <p>
+              “We managed to make
+              <strong>90% of the CRO improvements in-house</strong>
+              and saved thousands.”
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-stars">★★★★★</div>
+            <p>
+              “Our conversion rate increased from
+              <strong>2% to 4.5%</strong>
+              within one month.”
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-stars">★★★★★</div>
+            <p>
+              “We experienced a
+              <strong>30% jump in sales</strong>
+              after implementing the recommendations.”
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <div class="container">
+        <h2 class="faq-title">FAQ</h2>
+
+        <div class="faq-list">
+          <div
+            class="faq-item"
+            *ngFor="let faq of faqs; let i = index"
+            [class.active]="openFaqIndex === i"
+          >
+            <button class="faq-question" (click)="toggleFaq(i)">
+              <span>{{ faq.question }}</span>
+
+              <span class="faq-icon">+</span>
+            </button>
+
+            <div class="faq-answer">
+              <p>{{ faq.answer }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container footer-wrap">
+        <div class="footer-left">
+          <div>Privacy Policy</div>
+          <div>Contact Us</div>
+        </div>
+
+        <div class="footer-center">
+          Instant audits are generated using HighConvertAI’s proprietary CRO analysis algorithms.
+        </div>
+
+        <div class="footer-right">© HighConvertAI, 2026</div>
+      </div>
+    </footer>
+  </ng-container>
+</ng-container>
+
+<!-- ===================================================== -->
+<!-- LOADING MODAL -->
+<!-- ===================================================== -->
+
+<app-scan-loading-modal
+  [visible]="loading"
+  [url]="url"
+  [progress]="progress"
+  [siteType]="detectedSiteType"
+  [steps]="steps"
+  [tipText]="tips[currentTipIndex]"
+>
+</app-scan-loading-modal>

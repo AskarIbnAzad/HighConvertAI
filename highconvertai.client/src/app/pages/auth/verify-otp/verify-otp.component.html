@@ -1,0 +1,99 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <!-- Header -->
+    <div class="auth-header">
+      <div class="otp-icon">
+        <i class="fas fa-envelope"></i>
+      </div>
+
+      <h1>Check your email</h1>
+
+      <p>
+        We sent a verification code to
+        <br />
+        <strong>{{ email }}</strong>
+      </p>
+    </div>
+
+    <!-- Global Success -->
+    <div class="alert alert-success" *ngIf="successMsg">
+      <i class="fa-solid fa-circle-check"></i>
+      {{ successMsg }}
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <!-- OTP -->
+      <div class="field">
+        <label>Verification Code</label>
+
+        <input
+          #otpInput
+          type="text"
+          class="otp-input"
+          formControlName="otp"
+          maxlength="6"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          placeholder="123456"
+          [readonly]="loading"
+          (input)="onlyNumbers($event)"
+          [class.invalid]="f['otp'].touched && f['otp'].invalid"
+        />
+
+        <!-- Validation -->
+        <div class="tooltip-box" *ngIf="f['otp'].touched && f['otp'].invalid">
+          <!-- Server -->
+          <div *ngIf="f['otp'].errors?.['serverError']">
+            {{ f['otp'].errors?.['serverError'] }}
+          </div>
+
+          <!-- Required -->
+          <div *ngIf="!f['otp'].errors?.['serverError'] && f['otp'].errors?.['required']">
+            Verification code is required.
+          </div>
+
+          <!-- Pattern -->
+          <div *ngIf="!f['otp'].errors?.['serverError'] && f['otp'].errors?.['pattern']">
+            Verification code must contain exactly 6 digits.
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn-primary" type="submit" [disabled]="loading">
+        <span *ngIf="loading" class="spinner"></span>
+        <span>{{ loading ? 'Verifying...' : 'Verify Email' }}</span>
+      </button>
+    </form>
+
+    <!-- Resend -->
+    <div class="resend-row">
+      <span> Didn't receive the code? </span>
+
+      <button
+        type="button"
+        class="btn-link"
+        (click)="resend()"
+        [disabled]="resending || resendCooldown > 0"
+      >
+        <ng-container *ngIf="resending"> Sending... </ng-container>
+
+        <ng-container *ngIf="!resending && resendCooldown > 0">
+          Resend in {{ resendCooldown }}s
+        </ng-container>
+
+        <ng-container *ngIf="!resending && resendCooldown === 0"> Resend Code </ng-container>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <p class="auth-footer">
+      <a routerLink="/register">
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to registration
+      </a>
+    </p>
+  </div>
+</div>

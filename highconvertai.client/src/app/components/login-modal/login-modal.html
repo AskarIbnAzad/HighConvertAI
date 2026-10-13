@@ -1,0 +1,66 @@
+<div class="modal-overlay"
+     *ngIf="visible">
+
+  <div class="login-modal">
+
+    <button class="close-btn"
+            (click)="closeModal()">
+
+      ×
+
+    </button>
+
+    <div class="login-top">
+
+      <h2>
+        Sign in to your account
+      </h2>
+
+      <p>
+        Access your CRO audit reports
+        and run new audits
+      </p>
+
+    </div>
+
+    <form class="login-form"
+          (ngSubmit)="login()">
+
+      <div class="form-group">
+
+        <label>Email address</label>
+
+        <input type="email"
+               name="email"
+               [(ngModel)]="model.email"
+               placeholder="Enter your email" />
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Password</label>
+
+        <input type="password"
+               name="password"
+               [(ngModel)]="model.password"
+               placeholder="Enter your password" />
+
+      </div>
+
+      <button type="submit"
+              class="submit-btn">
+
+        {{
+          isLoading
+            ? 'Signing In...'
+            : 'Sign In'
+        }}
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

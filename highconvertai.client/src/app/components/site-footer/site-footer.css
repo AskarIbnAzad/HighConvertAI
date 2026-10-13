@@ -1,0 +1,30 @@
+.footer {
+  padding: 70px 0 40px;
+}
+
+.footer-inner {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #145cff;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+  .footer-links a {
+    color: #475569;
+  }
+
+.footer-copy {
+  color: #64748b;
+}

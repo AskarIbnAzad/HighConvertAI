@@ -1,0 +1,135 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 120px;
+  padding-left: 24px;
+  padding-right: 24px;
+  overflow-y: auto;
+}
+
+.login-modal {
+  width: 100%;
+  max-width: 520px;
+  background: white;
+  border-radius: 32px;
+  padding: 42px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.22);
+  animation: modalFade 0.25s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  cursor: pointer;
+  font-size: 22px;
+  transition: 0.2s;
+}
+
+  .close-btn:hover {
+    background: #e2e8f0;
+  }
+
+.login-top h2 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.login-top p {
+  margin-top: 12px;
+  color: #64748b;
+  line-height: 1.7;
+}
+
+.login-form {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+  .form-group label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .form-group input {
+    height: 58px;
+    border-radius: 16px;
+    border: 1px solid #dbe3ec;
+    background: #f8fbff;
+    padding: 0 18px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.2s;
+  }
+
+    .form-group input:focus {
+      border-color: #145cff;
+      box-shadow: 0 0 0 4px rgba(20, 92, 255, 0.08);
+    }
+
+.submit-btn {
+  height: 60px;
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient( 135deg, #145cff 0%, #0047d6 100% );
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: 0.25s ease;
+  box-shadow: 0 15px 35px rgba(20, 92, 255, 0.24);
+}
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(20, 92, 255, 0.32);
+  }
+
+@keyframes modalFade {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+
+  .login-modal {
+    padding: 32px 24px;
+    border-radius: 24px;
+  }
+
+  .login-top h2 {
+    font-size: 28px;
+  }
+}

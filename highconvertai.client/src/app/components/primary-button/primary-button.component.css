@@ -1,0 +1,24 @@
+.btn {
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(130deg, var(--accent), var(--accent-2));
+  color: #071012;
+  padding: 0.9rem 1.3rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.btn:hover:enabled {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

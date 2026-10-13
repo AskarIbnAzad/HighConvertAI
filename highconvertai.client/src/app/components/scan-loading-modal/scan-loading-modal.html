@@ -1,0 +1,53 @@
+<div class="modal-overlay" *ngIf="visible">
+  <div class="modal-card">
+    <div class="top-progress">
+      <div class="top-progress-bar" [style.width.%]="progress"></div>
+    </div>
+
+    <div class="modal-header">
+      <div class="cycle-loader">
+        <div class="cycle-ring"></div>
+      </div>
+
+      <h2>Analyzing Your Website</h2>
+      <p>
+        We're running a comprehensive CRO audit on
+        <br />
+        <span class="url-text">{{ url }}</span>
+      </p>
+
+      <div class="site-type-pill">
+        <span class="site-label">Site Type:</span>
+        <span class="site-value">{{ siteType }}</span>
+      </div>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-row" *ngFor="let step of steps" [ngClass]="step.status">
+        <div class="step-left">
+          <div class="step-icon">
+            <ng-container [ngSwitch]="step.status">
+              <span *ngSwitchCase="'done'">✓</span>
+              <span *ngSwitchCase="'running'" class="step-spinner"></span>
+              <span *ngSwitchDefault></span>
+            </ng-container>
+          </div>
+
+          <div class="step-texts">
+            <div class="step-title">{{ step.title }}</div>
+            <div class="step-description">{{ step.description }}</div>
+          </div>
+        </div>
+
+        <div class="step-status-pill" [ngClass]="step.status">
+          {{ step.value }}
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-title">Did you know?</div>
+      <div class="tip-text">{{ tipText }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+@HighConvertAI.Server_HostAddress = http://localhost:5157
+
+GET {{HighConvertAI.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{HighConvertAI.Server_HostAddress}}/pagespeed/?fast=true&url=https://www.shwapno.com/
+Accept: application/json

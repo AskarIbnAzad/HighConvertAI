@@ -1,0 +1,8 @@
+<label class="dropdown" [attr.for]="id">
+  <span class="dropdown__label">{{ label }}</span>
+  <select class="dropdown__control" [id]="id" [value]="value" (change)="onSelect($event)">
+    <option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
+</label>

@@ -1,0 +1,130 @@
+<div class="dashboard-page">
+  <div class="container">
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="dashboard-header">
+      <div>
+        <h1 class="dashboard-title">
+          Welcome back,
+          {{ user?.fullName }}
+        </h1>
+
+        <p class="dashboard-subtitle">
+          Run CRO audits, track your previous reports and improve your conversions.
+        </p>
+      </div>
+
+      <button class="primary-btn" (click)="runAudit()">+ New Audit</button>
+    </div>
+
+    <!-- ========================= -->
+    <!-- STATS -->
+    <!-- ========================= -->
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+
+        <div class="stat-info">
+          <div class="stat-label">Audits Used</div>
+
+          <div class="stat-value">{{ auditsUsedCount }}</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🚀</div>
+
+        <div class="stat-info">
+          <div class="stat-label">Remaining</div>
+
+          <div class="stat-value beta-value">Beta Mode</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">⭐</div>
+
+        <div class="stat-info">
+          <div class="stat-label">Average Score</div>
+
+          <div class="stat-value">{{ averageScore }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================= -->
+    <!-- RECENT AUDITS -->
+    <!-- ========================= -->
+
+    <div class="recent-box">
+      <div class="recent-header">
+        <div>
+          <h2>Recent Audits</h2>
+
+          <p>Review your most recent page audits</p>
+        </div>
+
+        <button class="view-all-btn" (click)="viewAllAudits()">View All →</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th>Website</th>
+
+              <th>Date</th>
+
+              <th>Page Type</th>
+
+              <th>Score</th>
+
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="audits.length === 0">
+              <td colspan="5" class="empty-row">No audits found.</td>
+            </tr>
+
+            <tr *ngFor="let audit of recentAudits; trackBy: trackByAudit">
+              <td>
+                <div class="website-cell">
+                  <div class="website-icon">🌐</div>
+
+                  <div>
+                    <div class="website-url">
+                      {{ audit.url }}
+                    </div>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                {{ audit.createdAtUtc | date: 'mediumDate' }}
+              </td>
+
+              <td>
+                <span class="page-pill">
+                  {{ audit.pageType }}
+                </span>
+              </td>
+
+              <td>
+                <span class="score-pill"> {{ audit.score }}% </span>
+              </td>
+
+              <td>
+                <button class="view-btn" (click)="openAudit(audit.id)">View Report →</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

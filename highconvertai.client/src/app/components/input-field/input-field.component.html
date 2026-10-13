@@ -1,0 +1,12 @@
+<label class="field" [attr.for]="id">
+  <span class="field__label">{{ label }}</span>
+  <input
+    class="field__control"
+    [id]="id"
+    [type]="type"
+    [placeholder]="placeholder"
+    [value]="value"
+    [required]="required"
+    (input)="onInput($event)"
+  />
+</label>

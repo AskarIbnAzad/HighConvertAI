@@ -1,0 +1,187 @@
+<div class="dashboard-page">
+  <div class="container">
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="dashboard-header">
+      <div>
+        <h1 class="dashboard-title">Audits</h1>
+        <p class="dashboard-subtitle">View and manage all CRO audits run on the platform.</p>
+      </div>
+    </div>
+
+    <!-- ========================= -->
+    <!-- TABLE -->
+    <!-- ========================= -->
+
+    <p-table
+      #dt
+      [value]="audits"
+      [loading]="loading"
+      dataKey="id"
+      [rows]="10"
+      [paginator]="true"
+      [rowsPerPageOptions]="[10, 20, 50]"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} audits"
+      responsiveLayout="scroll"
+      sortMode="multiple"
+      stripedRows
+      [globalFilterFields]="['userName', 'url', 'role', 'pageType']"
+      [filters]="{
+        userName: [{ value: null, matchMode: 'contains' }],
+        url: [{ value: null, matchMode: 'contains' }],
+        role: [{ value: null, matchMode: 'equals' }],
+        pageType: [{ value: null, matchMode: 'equals' }],
+        createdAtUtc: [{ value: null, matchMode: 'dateRange' }],
+      }"
+    >
+      <!-- Toolbar -->
+      <ng-template pTemplate="caption">
+        <div class="table-toolbar">
+          <button
+            pButton
+            label="Clear"
+            icon="pi pi-filter-slash"
+            outlined
+            (click)="clear(dt)"
+          ></button>
+
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              placeholder="Search audits..."
+              [(ngModel)]="globalFilterValue"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            />
+          </span>
+        </div>
+      </ng-template>
+
+      <!-- Header + Filter row -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="userName">
+            User
+            <p-sortIcon field="userName"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="url">
+            URL
+            <p-sortIcon field="url"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="pageType">
+            Page Type
+            <p-sortIcon field="pageType"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="score">
+            Score
+            <p-sortIcon field="score"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="createdAtUtc">
+            Date
+            <p-sortIcon field="createdAtUtc"></p-sortIcon>
+          </th>
+
+          <th style="width: 100px"></th>
+        </tr>
+
+        <tr class="filter-row">
+          <th>
+            <input
+              pInputText
+              type="text"
+              class="filter-input"
+              placeholder="Filter user"
+              [(ngModel)]="filterUserName"
+              (input)="dt.filter(filterUserName, 'userName', 'contains')"
+            />
+          </th>
+
+          <th>
+            <input
+              pInputText
+              type="text"
+              class="filter-input"
+              placeholder="Filter URL"
+              [(ngModel)]="filterUrl"
+              (input)="dt.filter(filterUrl, 'url', 'contains')"
+            />
+          </th>
+
+          <th>
+            <p-select
+              *ngIf="!loading"
+              [options]="pageTypeOptions"
+              [(ngModel)]="filterPageType"
+              placeholder="All Types"
+              [showClear]="true"
+              styleClass="filter-select"
+              (onChange)="dt.filter($event.value, 'pageType', 'equals')"
+            ></p-select>
+          </th>
+
+          <th></th>
+
+          <th>
+            <p-datepicker
+              [(ngModel)]="filterDateRange"
+              selectionMode="range"
+              [readonlyInput]="true"
+              [showButtonBar]="true"
+              [appendTo]="'body'"
+              dateFormat="M d, yy"
+              placeholder="Filter date range"
+              styleClass="filter-select"
+              (onSelect)="onDateRangeChange()"
+              (onClearClick)="onDateRangeClear()"
+            ></p-datepicker>
+          </th>
+
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <!-- Body -->
+      <ng-template pTemplate="body" let-audit>
+        <tr>
+          <td>
+            <div class="user-info">
+              <div class="avatar">{{ audit.userName?.charAt(0) }}</div>
+              <div class="user-name">{{ audit.userName }}</div>
+            </div>
+          </td>
+
+          <td class="url-cell" [title]="audit.url">{{ audit.url }}</td>
+
+          <td>
+            <span class="page-pill">{{ audit.pageType }}</span>
+          </td>
+
+          <td>
+            <p-tag [value]="audit.score + '%'" [severity]="getScoreSeverity(audit.score)"></p-tag>
+          </td>
+
+          <td>{{ audit.createdAtUtc | date: 'mediumDate' }}</td>
+
+          <td>
+            <button pButton icon="pi pi-eye" rounded text (click)="openAudit(audit.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Empty -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No audits found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

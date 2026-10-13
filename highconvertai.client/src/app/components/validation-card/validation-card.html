@@ -1,0 +1,25 @@
+<div class="validation-wrapper">
+  <!-- TOP -->
+
+  <div class="validation-top">
+    <div class="icon-circle">!</div>
+
+    <h1>{{ title }}</h1>
+
+    <p>
+      {{ message }}
+    </p>
+  </div>
+
+  <!-- BOTTOM -->
+
+  <div class="validation-body">
+    <p class="footer-text">
+      {{ footer }}
+    </p>
+
+    <button class="primary-btn" (click)="buttonClicked()">
+      {{ buttonText }}
+    </button>
+  </div>
+</div>

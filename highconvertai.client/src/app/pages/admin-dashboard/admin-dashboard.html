@@ -1,0 +1,79 @@
+<div class="dashboard-page">
+  <div class="container">
+    <!-- HEADER -->
+    <div class="dashboard-header">
+      <div>
+        <h1 class="dashboard-title">Welcome back, {{ user?.fullName || user?.name }}</h1>
+        <p class="dashboard-subtitle">Overview of platform activity, audits and user locations.</p>
+      </div>
+    </div>
+
+    <div class="loading-state" *ngIf="loading">Loading dashboard...</div>
+
+    <ng-container *ngIf="!loading && stats">
+      <!-- STATS -->
+      <div class="dashboard-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-label">Verified Users</div>
+            <div class="stat-value">{{ stats.totalUser }}</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-label">Total Audits</div>
+            <div class="stat-value">{{ stats.totalAudits }}</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">🕵️</div>
+            <div class="stat-label">Anonymous Scans</div>
+            <div class="stat-value">{{ stats.totalAnonymousScans }}</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-label">Avg Audit Processing Time</div>
+            <div class="stat-value">{{ formatDuration(stats.avgProcessingTimeMs) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-grid">
+        <div class="recent-box map-box">
+          <div class="recent-header" style="margin-bottom: 20px">
+            <h2>Top Locations</h2>
+            <p>Where your audits are coming from</p>
+          </div>
+          <div class="location-list">
+            <div class="empty-row" *ngIf="topLocations.length === 0">No location data yet.</div>
+
+            <div class="location-row" *ngFor="let loc of topLocations">
+              <div class="location-pin">📍</div>
+              <div class="location-info">
+                <div class="location-name">{{ loc.city }}, {{ loc.country }}</div>
+                <div class="location-bar-track">
+                  <div class="location-bar-fill" [style.width]="locationBarWidth(loc.count)"></div>
+                </div>
+              </div>
+              <div class="location-count">{{ loc.count }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="stat-card">
+          <div class="stat-icon">🆕</div>
+          <div class="stat-label">Last Week User</div>
+          <div class="stat-value">{{ stats.newUsersThisWeek }}</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🔍</div>
+          <div class="stat-label">Last Week Scan</div>
+          <div class="stat-value">{{ stats.scansThisWeek }}</div>
+        </div> -->
+      </div>
+    </ng-container>
+  </div>
+</div>

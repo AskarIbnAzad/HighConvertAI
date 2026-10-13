@@ -1,0 +1,174 @@
+<div class="dashboard-page">
+  <div class="container">
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="dashboard-header">
+      <div>
+        <h1 class="dashboard-title">Users</h1>
+        <p class="dashboard-subtitle">View and manage all registered users.</p>
+      </div>
+    </div>
+
+    <!-- ========================= -->
+    <!-- TABLE -->
+    <!-- ========================= -->
+
+    <p-table
+      #dt
+      [value]="users"
+      [loading]="loading"
+      dataKey="id"
+      [rows]="10"
+      [paginator]="true"
+      [rowsPerPageOptions]="[10, 20, 50]"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+      responsiveLayout="scroll"
+      sortMode="multiple"
+      stripedRows
+      [globalFilterFields]="['fullName', 'email', 'roles']"
+      [filters]="{
+        fullName: [{ value: null, matchMode: 'contains' }],
+        email: [{ value: null, matchMode: 'contains' }],
+        roles: [{ value: null, matchMode: 'arrayContains' }],
+        isEmailVerified: [{ value: null, matchMode: 'equals' }],
+      }"
+    >
+      <!-- Toolbar -->
+      <ng-template pTemplate="caption">
+        <div class="table-toolbar">
+          <button
+            pButton
+            label="Clear"
+            icon="pi pi-filter-slash"
+            outlined
+            (click)="clear(dt)"
+          ></button>
+
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              placeholder="Search users..."
+              [(ngModel)]="globalFilterValue"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            />
+          </span>
+        </div>
+      </ng-template>
+
+      <!-- Header + Filter row -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="fullName">
+            Name
+            <p-sortIcon field="fullName"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="email">
+            Email
+            <p-sortIcon field="email"></p-sortIcon>
+          </th>
+
+          <th>Role</th>
+
+          <th pSortableColumn="isEmailVerified">
+            Verified
+            <p-sortIcon field="isEmailVerified"></p-sortIcon>
+          </th>
+
+          <th style="width: 120px"></th>
+        </tr>
+
+        <tr class="filter-row">
+          <th>
+            <input
+              pInputText
+              type="text"
+              class="filter-input"
+              placeholder="Filter name"
+              [(ngModel)]="filterName"
+              (input)="dt.filter(filterName, 'fullName', 'contains')"
+            />
+          </th>
+
+          <th>
+            <input
+              pInputText
+              type="text"
+              class="filter-input"
+              placeholder="Filter email"
+              [(ngModel)]="filterEmail"
+              (input)="dt.filter(filterEmail, 'email', 'contains')"
+            />
+          </th>
+
+          <th>
+            <p-select
+              [options]="roleOptions"
+              [(ngModel)]="filterRole"
+              placeholder="All Roles"
+              [showClear]="true"
+              styleClass="filter-select"
+              (onChange)="dt.filter($event.value, 'roles', 'arrayContains')"
+            ></p-select>
+          </th>
+
+          <th>
+            <p-select
+              [options]="verifiedOptions"
+              [(ngModel)]="filterVerified"
+              placeholder="All Status"
+              [showClear]="true"
+              styleClass="filter-select"
+              (onChange)="dt.filter($event.value, 'isEmailVerified', 'equals')"
+            ></p-select>
+          </th>
+
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <!-- Body -->
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>
+            <div class="user-info">
+              <div class="avatar">{{ user.fullName?.charAt(0) }}</div>
+              <div class="user-name">{{ user.fullName }}</div>
+            </div>
+          </td>
+
+          <td>{{ user.email }}</td>
+
+          <td>
+            <p-tag
+              *ngFor="let role of user.roles"
+              [value]="role"
+              severity="info"
+              style="margin-right: 4px"
+            ></p-tag>
+            <span *ngIf="!user.roles?.length" class="no-role">No role</span>
+          </td>
+
+          <td>
+            <p-tag *ngIf="user.isEmailVerified" value="Verified" severity="success"></p-tag>
+            <p-tag *ngIf="!user.isEmailVerified" value="Pending" severity="danger"></p-tag>
+          </td>
+
+          <td>{{ user.createdAt | date: 'MMM d, y, hh:mm a' }}</td>
+        </tr>
+      </ng-template>
+
+      <!-- Empty -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">No users found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

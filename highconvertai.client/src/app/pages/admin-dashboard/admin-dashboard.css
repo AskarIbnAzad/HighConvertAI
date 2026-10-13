@@ -1,0 +1,293 @@
+.dashboard-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f7fde9 0%, #ffffff 100%);
+  padding: 32px 0 60px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.dashboard-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #17331f;
+}
+
+.dashboard-subtitle {
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.dashboard-content {
+  margin-bottom: 24px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid rgba(32,51,0,.10);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: .2s;
+  box-shadow: 0 4px 14px rgba(20,40,20,.04);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(20,40,20,.07);
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #eef5de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.stat-info {
+  min-width: 0;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.2;
+}
+
+.stat-value {
+  margin-top: 4px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0d4f4a;
+  line-height: 1.1;
+}
+
+/* =========================
+   MAIN GRID (map + side cards)
+========================= */
+
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 4fr;
+  gap: 24px;
+  margin-top: 24px;
+  align-items: start;
+}
+.bottom-grid .stat-card {
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.map-box {
+  height: 230px;
+}
+
+@media (max-width: 992px) {
+  .bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom-grid .stat-card,
+  .map-box {
+    height: auto;
+  }
+}
+/* =========================
+   CARDS
+========================= */
+
+.audit-box,
+.recent-box {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid rgba(32,51,0,.10);
+  box-shadow: 0 4px 14px rgba(20,40,20,.04);
+  padding: 24px;
+}
+
+.section-header h2,
+.recent-header h2 {
+  margin: 0;
+  color: #17331f;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.section-header p,
+.recent-header p {
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* =========================
+   MAP
+========================= */
+
+.map-wrapper {
+  margin-top: 16px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(32,51,0,.10);
+}
+
+.leaflet-map {
+  width: 100%;
+  height: 220px;
+  z-index: 0;
+}
+
+/* =========================
+   LOCATIONS
+========================= */
+
+.location-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.location-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.location-pin {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #eef5de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.location-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.location-name {
+  font-weight: 600;
+  color: #17331f;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.location-bar-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #f1f5f4;
+  overflow: hidden;
+}
+
+.location-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0d4f4a, #7bb02f);
+  transition: width .4s ease;
+}
+
+.location-count {
+  min-width: 28px;
+  text-align: right;
+  font-weight: 700;
+  color: #0d4f4a;
+  font-size: 13px;
+}
+
+/* =========================
+   LOADING / EMPTY
+========================= */
+
+.loading-state,
+.empty-row {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 992px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .side-cards {
+    flex-direction: row;
+  }
+
+  .side-stat-card {
+    flex: 1;
+  }
+
+  .dashboard-title {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 576px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-box,
+  .recent-box,
+  .stat-card {
+    padding: 18px;
+  }
+
+  .side-cards {
+    flex-direction: column;
+  }
+
+  .leaflet-map {
+    height: 200px;
+  }
+}

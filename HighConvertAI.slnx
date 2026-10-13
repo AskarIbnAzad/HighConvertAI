@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="highconvertai.client/highconvertai.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="HighConvertAI.Server/HighConvertAI.Server.csproj" />
+</Solution>
